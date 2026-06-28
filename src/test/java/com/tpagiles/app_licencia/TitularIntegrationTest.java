@@ -48,6 +48,12 @@ class TitularIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private com.tpagiles.app_licencia.repository.TarifarioLicenciaRepository tarifaRepo;
+
+    @Autowired
+    private com.tpagiles.app_licencia.service.helper.CostoLicenciaHelper costoLicenciaHelper;
+
     private final String VALID_TOKEN = "miTokenValido";
 
     @BeforeEach
@@ -58,6 +64,11 @@ class TitularIntegrationTest {
         DefaultClaims claims = new DefaultClaims();
         claims.put("roles", List.of("SUPER_USER"));
         given(jwtService.parseClaims(VALID_TOKEN)).willReturn(claims);
+
+        if (tarifaRepo.count() == 0) {
+            tarifaRepo.save(new com.tpagiles.app_licencia.model.TarifarioLicencia(null, ClaseLicencia.B, 5, 40.0));
+        }
+        costoLicenciaHelper.init();
     }
 
     @Test

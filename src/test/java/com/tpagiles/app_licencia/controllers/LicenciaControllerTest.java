@@ -51,6 +51,9 @@ class LicenciaControllerTest {
     @MockitoBean
     private JwtService jwtService;
 
+    @MockitoBean
+    private com.tpagiles.app_licencia.config.ErrorResponseFactory errorResponseFactory;
+
     private LicenciaRecord validRecord;
     private LicenciaResponseRecord expectedResponse;
 

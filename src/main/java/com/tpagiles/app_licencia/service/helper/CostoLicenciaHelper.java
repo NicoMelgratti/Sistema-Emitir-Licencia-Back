@@ -36,7 +36,7 @@ public class CostoLicenciaHelper {
     private Map<ClaseLicencia, Map<Integer, Double>> tarifas;
 
     @PostConstruct
-    private void init() {
+    public void init() {
         // Cargamos y agrupamos todas las filas en un EnumMap inmutable
         Map<ClaseLicencia, Map<Integer, Double>> cargadas =
                 tarifarioLicenciaRepository.findAll().stream()

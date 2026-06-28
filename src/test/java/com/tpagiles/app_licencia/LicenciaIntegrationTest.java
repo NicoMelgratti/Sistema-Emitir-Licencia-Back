@@ -50,6 +50,12 @@ class LicenciaIntegrationTest {
 
     private final String VALID_TOKEN = "miTokenValido";
 
+    @Autowired
+    private com.tpagiles.app_licencia.repository.TarifarioLicenciaRepository tarifaRepo;
+
+    @Autowired
+    private com.tpagiles.app_licencia.service.helper.CostoLicenciaHelper costoLicenciaHelper;
+
     @BeforeEach
     void setup() {
         // Simular JWT válido y roles
@@ -58,6 +64,12 @@ class LicenciaIntegrationTest {
         DefaultClaims claims = new DefaultClaims();
         claims.put("roles", List.of("SUPER_USER"));
         given(jwtService.parseClaims(VALID_TOKEN)).willReturn(claims);
+
+        if (tarifaRepo.count() == 0) {
+            tarifaRepo.save(new com.tpagiles.app_licencia.model.TarifarioLicencia(null, ClaseLicencia.A, 5, 40.0));
+            tarifaRepo.save(new com.tpagiles.app_licencia.model.TarifarioLicencia(null, ClaseLicencia.B, 5, 40.0));
+        }
+        costoLicenciaHelper.init();
     }
 
     @Test
