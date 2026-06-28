@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@DependsOn("dataSourceScriptDatabaseInitializer")
+
 @RequiredArgsConstructor
 public class CostoLicenciaHelper {
 
@@ -45,7 +45,8 @@ public class CostoLicenciaHelper {
                                 () -> new EnumMap<>(ClaseLicencia.class),
                                 Collectors.toUnmodifiableMap(
                                         TarifarioLicencia::getVigenciaAnios,
-                                        TarifarioLicencia::getCosto
+                                        TarifarioLicencia::getCosto,
+                                        (costoExistente, costoNuevo) -> costoExistente
                                 )
                         ));
 
